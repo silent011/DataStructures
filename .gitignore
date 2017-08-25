@@ -301,4 +301,7 @@ __pycache__/
 *.rar
 *.zip
 
+*.doc
+*.docx
+
 test/
