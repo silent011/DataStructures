@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedStack", "LinkedStack\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleLinkedQ", "DoubleLinkedQ\DoubleLinkedQ.csproj", "{E564D7C4-3C31-4662-9E4B-805971CD56A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortestSequel", "ShortestSequel\ShortestSequel.csproj", "{130884A1-9075-4374-85AF-E2D972AA2BAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E564D7C4-3C31-4662-9E4B-805971CD56A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E564D7C4-3C31-4662-9E4B-805971CD56A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E564D7C4-3C31-4662-9E4B-805971CD56A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130884A1-9075-4374-85AF-E2D972AA2BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130884A1-9075-4374-85AF-E2D972AA2BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130884A1-9075-4374-85AF-E2D972AA2BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130884A1-9075-4374-85AF-E2D972AA2BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
