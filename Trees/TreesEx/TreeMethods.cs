@@ -68,4 +68,19 @@ class TreeMethods
         return deepest;
         
     }
+
+    public static Stack<int> LongestPath(Tree<int> tree)
+    {
+        Stack<int> path = new Stack<int>();
+        Tree<int> deepestNode = TreeMethods.FindDeepestNode(tree);
+
+        Tree<int> currentNode = deepestNode;
+        while(currentNode != null)
+        {
+            path.Push(currentNode.Value);
+            currentNode = currentNode.Parent;
+        }
+
+        return path;
+    }
 }

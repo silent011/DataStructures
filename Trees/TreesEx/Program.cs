@@ -22,8 +22,11 @@ class Program
         //Console.WriteLine("Middle nodes: " + string.Join(" ",
         //    middleNodes));
 
-        Tree<int> deepestNode = TreeMethods.FindDeepestNode(tree);
+        //Tree<int> deepestNode = TreeMethods.FindDeepestNode(tree);
+        //Console.WriteLine("Deepest node: " + deepestNode.Value);
 
-        Console.WriteLine("Deepest node: " + deepestNode.Value);
+        Stack<int> longestPath = TreeMethods.LongestPath(tree);
+        Console.WriteLine("Longest path: " + string.Join(" ",
+            longestPath));
     }
 }
