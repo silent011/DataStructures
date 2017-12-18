@@ -83,4 +83,68 @@ class TreeMethods
 
         return path;
     }
+
+    public static List<Stack<int>> AllPathsWithSum(Tree<int> tree, int sum)
+    {
+        List<Stack<int>> sumPaths = new List<Stack<int>>();
+
+        GoDeep(tree, tree.Value);
+
+        void GoDeep(Tree<int> node,int nodeSum = 0)
+        {
+            if(node.Children.Count == 0 && sum == nodeSum)
+            {
+                Stack<int> nodePathStack = new Stack<int>();
+                Tree<int> current = node;
+                while(current != null)
+                {
+                    nodePathStack.Push(current.Value);
+                    current = current.Parent;
+                }
+                sumPaths.Add(nodePathStack);
+            }
+            else
+            {
+                foreach (var child in node.Children)
+                {
+                    GoDeep(child, nodeSum + child.Value);
+                }
+            }
+        }
+
+        return sumPaths;
+    }
+
+
+    public static List<Stack<int>> SubtreesWithSum(Tree<int> tree,
+                                                            int sum)
+    {
+        List<Stack<int>> sumPaths = new List<Stack<int>>();
+
+        GoDeep(tree, tree.Value);
+
+        void GoDeep(Tree<int> node, int nodeSum = 0)
+        {
+            if (sum == nodeSum)
+            {
+                Stack<int> nodePathStack = new Stack<int>();
+                Tree<int> current = node;
+                while (current != null)
+                {
+                    nodePathStack.Push(current.Value);
+                    current = current.Parent;
+                }
+                sumPaths.Add(nodePathStack);
+            }
+            else
+            {
+                foreach (var child in node.Children)
+                {
+                    GoDeep(child, nodeSum + child.Value);
+                }
+            }
+        }
+
+        return sumPaths;
+    }
 }
