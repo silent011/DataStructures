@@ -8,7 +8,10 @@ class TreeMethods
     public static Tree<int> Read()
     {
         int N = int.Parse(Console.ReadLine());
-
+        if(N == 1)
+        {
+            N = 2;
+        }
        int[][] entries = new int[N - 1][];
 
         for (int i = 0; i < N - 1; i++)
@@ -18,7 +21,6 @@ class TreeMethods
 
             entries[i] = entryArr;
         }
-
         int[] firstEntry = entries.First();
         Tree<int> tree = new Tree<int>(firstEntry[0]);
 
@@ -116,35 +118,45 @@ class TreeMethods
     }
 
 
-    public static List<Stack<int>> SubtreesWithSum(Tree<int> tree,
+    public static List<List<int>> SubtreesWithSum(Tree<int> tree,
                                                             int sum)
     {
-        List<Stack<int>> sumPaths = new List<Stack<int>>();
+        List<List<int>> sumTrees = new List<List<int>>();
 
-        GoDeep(tree, tree.Value);
-
-        void GoDeep(Tree<int> node, int nodeSum = 0)
+        SumDeep(tree);
+        
+        void SumDeep(Tree<int> node)
         {
-            if (sum == nodeSum)
+            List<int> history = new List<int>();
+            int value = node.Value;
+            int currentSum = value;
+            history.Add(value);
+
+            Queue<Tree<int>> q = new Queue<Tree<int>>();
+            q.Enqueue(node);
+            while(q.Count > 0)
             {
-                Stack<int> nodePathStack = new Stack<int>();
-                Tree<int> current = node;
-                while (current != null)
+                var current = q.Dequeue();
+                foreach (var child in current.Children)
                 {
-                    nodePathStack.Push(current.Value);
-                    current = current.Parent;
+                    history.Add(child.Value);
+                    q.Enqueue(child);
+                    currentSum += child.Value;
                 }
-                sumPaths.Add(nodePathStack);
             }
-            else
+
+            foreach (var child in node.Children)
             {
-                foreach (var child in node.Children)
-                {
-                    GoDeep(child, nodeSum + child.Value);
-                }
+                SumDeep(child);
+            }
+           
+            if(currentSum == sum)
+            {
+                sumTrees.Add(history);
             }
         }
 
-        return sumPaths;
+
+        return sumTrees;
     }
 }

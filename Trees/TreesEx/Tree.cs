@@ -30,9 +30,13 @@ public class Tree<T>
             T[] entry = entries[i];
             if(Compare(entry[0], Value))
             {
-                Tree<T> child = new Tree<T>(entry[1]);
-                child.Parent = this;
-                Children.Add(child);
+                if(entry.Length > 1)
+                {
+                    Tree<T> child = new Tree<T>(entry[1]);
+                    child.Parent = this;
+                    Children.Add(child);
+                }
+
             }
           
         }
