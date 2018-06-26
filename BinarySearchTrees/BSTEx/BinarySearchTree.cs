@@ -21,28 +21,27 @@ public class BinarySearchTree<T>:IBinarySearchTree<T> where T : IComparable
         return Ceiling(val, Root);
     }
 
-    private T Ceiling(T val, Node node)
+    private T Ceiling(T val, Node node, Node parent = null)
     {
         if (node == null) return default(T);
 
         int nodeIsBigger = ComparedTo(node.Value, val);
 
-        if(nodeIsBigger < 0)
-        {
-            return Ceiling(val, node.Right);
-        }
-        else if(nodeIsBigger > 0)
-        {
-            return Ceiling(val, node.Left);
-        }
+        if(nodeIsBigger < 0) return Ceiling(val, node.Right, node);
+        
+        else if(nodeIsBigger > 0) return Ceiling(val, node.Left, node);
+        
         else
         {
-            if(node.Right == null)
+            T resultFromLeft = GoOnlyLeft(node.Right);
+
+            if(resultFromLeft.CompareTo(default(T)) == 0 && parent != null)
             {
-                return Ceiling(val, node.Left);
+                int compareValToParent = node.Value.CompareTo(parent.Value);
+                if (compareValToParent < 0) return parent.Value;
             }
 
-            return node.Right.Value;
+            return resultFromLeft;
         }
     }
 
@@ -279,35 +278,52 @@ public class BinarySearchTree<T>:IBinarySearchTree<T> where T : IComparable
         return Floor(val, Root);
     }
 
-    private T Floor(T val, Node node)
+    private T Floor(T val, Node node, Node parent = null)
     {
         if(node == null)
         {
             return default(T);
         }
 
-        int nodeIsBigger = ComparedTo(node.Value, val);
-        if(nodeIsBigger > 0)
-        {
-            return Floor(val, node.Left);
-        }
-        else if(nodeIsBigger < 0)
-        {
-            return Floor(val, node.Right);
-        }
+        int nodeIsBigger = node.Value.CompareTo(val);
+
+        if (nodeIsBigger < 0) return Floor(val, node.Right, node);
+        else if (nodeIsBigger > 0) return Floor(val, node.Left, node);
         else
         {
-            if (node.Left == null)
+            //first input is the left node and from there it goes only in the right branches
+            //to find the biggest number smaller than the input. If there is no left node it will
+            // just return the default for T.
+            T resultFromRight = GoOnlyRight(node.Left);
+
+            if(resultFromRight.CompareTo(default(T)) == 0 && parent != null)
             {
-                return Floor(val, node.Right);
+                int compToParent = node.Value.CompareTo(parent.Value);
+                if (compToParent > 0) return parent.Value;
             }
-            else
-            {
-                return node.Left.Value;
-            }
+
+            return resultFromRight;
         }
 
        
+    }
+    
+    private T GoOnlyRight(Node node)
+    {
+        if (node == null) return default(T);
+
+        if (node.Right != null) return GoOnlyRight(node.Right);
+
+        return node.Value;
+    }
+
+    private T GoOnlyLeft(Node node)
+    {
+        if (node == null) return default(T);
+
+        if (node.Left != null) return GoOnlyLeft(node.Left);
+
+        return node.Value;
     }
 
     public void Print()
@@ -422,46 +438,56 @@ public class Launcher
 {
     public static void Main()
     {
-        //var bst = new BinarySearchTree<int>();
+        var bst = new BinarySearchTree<int>();
 
-        //bst.Insert(10);
-        //bst.Insert(5);
-        //bst.Insert(3);
-        //bst.Insert(1);
-        //bst.Insert(4);
-        //bst.Insert(8);
-        //bst.Insert(9);
-        //bst.Insert(37);
-        //bst.Insert(39);
-        //bst.Insert(45);
-        //bst.Insert(15);
-        //bst.Insert(13);
-        //bst.Insert(20);
-        //bst.Insert(11);
-        //bst.Insert(13);
-        //bst.Insert(34);
+        bst.Insert(10);
+        bst.Insert(5);
+        bst.Insert(3);
+        bst.Insert(1);
+        bst.Insert(4);
+        bst.Insert(8);
+        bst.Insert(9);
+        bst.Insert(37);
+        bst.Insert(39);
+        bst.Insert(45);
+        bst.Insert(15);
+        bst.Insert(13);
+        bst.Insert(20);
+        bst.Insert(11);
+        bst.Insert(13);
+        bst.Insert(34);
 
-        //bst.Print();
-        //Console.WriteLine(bst.Count());
+        bst.Print();
+        Console.WriteLine(bst.Count());
 
-        //    bst.Insert(12);
-        //    bst.Insert(11);
-        //    bst.Print();
-        //    Console.WriteLine(bst.Count());
+        
 
-        //    bst.DeleteMin();
-        //    Console.WriteLine(bst.Count());
-        //    bst.DeleteMax();
-        //    Console.WriteLine(bst.Count());
+        void TestCeiling()
+        {
+            ExecCeiling(15);
+            ExecCeiling(45);
+            ExecCeiling(10);
+            ExecCeiling(24);
+        }
 
-        //Console.WriteLine(bst.Rank(40));
-        //Console.WriteLine(bst.Rank(5));
+        void ExecCeiling(int n)
+        {
+            Console.WriteLine($"Ceiling of {n}: " + bst.Ceiling(n));
+        }
 
-        //Console.WriteLine(bst.Select(3));
+        void TestFloor()
+        {
+            ExecFloor(5);
+            ExecFloor(9);
+            ExecFloor(34);
+            ExecFloor(10);
+        }
 
-        //bst.Delete(5);
-        //bst.Print();
-        //Console.WriteLine(bst.Count());
-
+        void ExecFloor(int n)
+        {
+            Console.WriteLine($"Floor of {n}: " + bst.Floor(n));
+        }
     }
+
+   
 }
