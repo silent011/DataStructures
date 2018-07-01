@@ -66,13 +66,13 @@ public class RedBlackTree<T> : IBinarySearchTree<T> where T : IComparable
 
         Node temp = node;
 
-        if (IsRed(node.Right) && !IsRed(node.Left))
-        {
-            temp = RotateLeft(temp);
-        }
         if (IsRed(node) && IsRed(node.Left))
         {
             temp = RotateRight(temp);
+        }
+        if (IsRed(node.Right) && !IsRed(node.Left))
+        {
+            temp = RotateLeft(temp);
         }
         if (IsRed(temp.Left) && IsRed(temp.Right))
         {
