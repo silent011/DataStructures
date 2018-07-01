@@ -2,14 +2,14 @@
 
 public static class Heap<T> where T : IComparable<T>
 {
-    public static void Sort(T[] arr)
+    public static void Sort(T[] arr) //5, 8, 1, 3, 12, -4
     {
         int n = arr.Length;
         for (int i = n / 2; i >= 0; i--)
         {
             BubbleDown(arr, i, n);
         }
-       
+        //Console.WriteLine("After first loop: " + string.Join(" ",arr));
         for(int i = n - 1; i > 0; i--)
         {
             Swap(arr, i, 0);
@@ -19,7 +19,7 @@ public static class Heap<T> where T : IComparable<T>
 
     private static void BubbleDown(T[] arr, int current, int border)
     {
-        while(current < border / 2)
+        while(current < border / 2) //5, 8, 1, 3, 12, -4
         {
             int child = Left(current);
             if(child + 1 < border && IsLess(arr,child, child + 1))
@@ -44,11 +44,6 @@ public static class Heap<T> where T : IComparable<T>
     private static bool IsLess(T[] arr, int index, int index2)
     {
         return arr[index].CompareTo(arr[index2]) < 0;
-    }
-
-    private static bool HasChild(T[] arr, int index)
-    {
-        return index < arr.Length;
     }
 
     private static int Left(int index)

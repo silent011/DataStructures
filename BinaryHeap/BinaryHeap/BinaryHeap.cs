@@ -60,9 +60,9 @@ public class BinaryHeap<T> where T : IComparable<T>
     {
         if(heap.Count > 0) return heap[0];
 
-        throw new Exception("Heap is emtpy");
+        throw new InvalidOperationException();
     }
-
+        
     public T Pull()
     {
         if (Count == 0) throw new InvalidOperationException();
