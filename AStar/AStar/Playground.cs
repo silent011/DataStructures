@@ -46,27 +46,27 @@ public class Playground
 
     static void Main()
     {
-        // map = ReadMap();
+        //// map = ReadMap();
 
-        var start = FindGoal('P');
-        var goal = FindGoal('*');
+        //var start = FindGoal('P');
+        //var goal = FindGoal('*');
 
-        var aStar = new AStar(map);
-        var path = aStar.GetPath(new Node(15,2), new Node(15,6));
+        //var aStar = new AStar(map);
+        //var path = aStar.GetPath(new Node(15,2), new Node(15,6));
 
-        int count = 0;
-        foreach (var node in path)
-        {
-            count++;
-            var row = node.Row;
-            var col = node.Col;
-            map[row, col] = '@';
-        }
+        //int count = 0;
+        //foreach (var node in path)
+        //{
+        //    count++;
+        //    var row = node.Row;
+        //    var col = node.Col;
+        //    map[row, col] = '@';
+        //}
 
-        PrintMap();
-        Console.WriteLine("Count: " + count);
+        //PrintMap();
+        //Console.WriteLine("Count: " + count);
 
-    }
+    }   
 
     private static char[,] ReadMap()
     {
