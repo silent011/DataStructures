@@ -8,6 +8,8 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
 
     private const int InitialCapacity = 16;
 
+    public const float LoadFactor = 0.75f;
+
     public int Count { get; private set; }
 
     public HashTable(int capacity = InitialCapacity)
@@ -45,19 +47,27 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
 
     private void GrowIfNeeded()
     {
-        if(Capacity == Count)
+        if((Count + 1) / (float)Capacity > LoadFactor)
         {
-            var newList = new LinkedList<KeyValue<TKey, TValue>>[2 * Capacity];
-            for (int i = 0; i < Capacity; i++)
+            Grow();
+        }
+    }
+
+    private void Grow()
+    {
+        var newHashTable = new HashTable<TKey, TValue>(2 * Capacity);
+        foreach (var listItem in List)
+        {
+            if(listItem != null)
             {
-                if(List[i] != null && List[i].Count > 0)
+                foreach (var elem in listItem)
                 {
-                    int newIndex = Math.Abs(i.GetHashCode()) % newList.Length;
-                    newList[newIndex] = List[i];
+                    newHashTable.Add(elem.Key, elem.Value);
                 }
             }
-            List = newList;
         }
+
+        List = newHashTable.List;
     }
 
     private int GetIndexValue(TKey key)
@@ -67,7 +77,22 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
 
     public bool AddOrReplace(TKey key, TValue value)
     {
-        throw new NotImplementedException();
+        int index = GetIndexValue(key);
+        if (List[index] == null)
+            List[index] = new LinkedList<KeyValue<TKey, TValue>>();
+        foreach (var item in List[index])
+        {
+            if (item.Key.Equals(key))
+            {
+                item.Value = value;
+                return false;
+            }
+        }
+
+        var newElement = new KeyValue<TKey, TValue>(key, value);
+        List[index].AddLast(newElement);
+        Count++;
+        return true;
     }
 
     public TValue Get(TKey key)
