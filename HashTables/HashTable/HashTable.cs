@@ -107,12 +107,11 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
     {
         get
         {
-            throw new NotImplementedException();
-            // Note: throw an exception on missing key
+            return Get(key);
         }
         set
         {
-            throw new NotImplementedException();
+            AddOrReplace(key, value);
         }
     }
 
