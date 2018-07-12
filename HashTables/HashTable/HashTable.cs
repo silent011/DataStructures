@@ -162,7 +162,22 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
 
     public bool Remove(TKey key)
     {
-        throw new NotImplementedException();
+        int index = GetIndexValue(key);
+        if(List[index] != null)
+        {
+            var items = List[index];
+            foreach (var item in items)
+            {
+                if (item.Key.Equals(key))
+                {
+                    items.Remove(item);
+                    Count--;
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void Clear()
