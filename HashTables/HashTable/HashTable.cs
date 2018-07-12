@@ -72,8 +72,10 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
 
     public TValue Get(TKey key)
     {
-        throw new NotImplementedException();
-        // Note: throw an exception on missing key
+        var element = Find(key);
+        if (element == null) throw new KeyNotFoundException();
+
+        return element.Value;
     }
 
     public TValue this[TKey key]
@@ -91,17 +93,47 @@ public class HashTable<TKey, TValue> : IEnumerable<KeyValue<TKey, TValue>>
 
     public bool TryGetValue(TKey key, out TValue value)
     {
-        throw new NotImplementedException();
+        var element = Find(key);
+        if(element != null)
+        {
+            value = element.Value;
+            return true;
+        }
+
+        value = default(TValue);
+        return false;
     }
 
     public KeyValue<TKey, TValue> Find(TKey key)
     {
-        throw new NotImplementedException();
+        int index = GetIndexValue(key);
+        var items = List[index];
+        if(items != null)
+        {
+            foreach (var item in items)
+            {
+                if (item.Key.Equals(key))
+                {
+                    return item;
+                }
+            }
+        }
+
+        return null;
     }
 
     public bool ContainsKey(TKey key)
     {
-        throw new NotImplementedException();
+        int index = GetIndexValue(key);
+        if(List[index] != null)
+        {
+            foreach (var item in List[index])
+            {
+                if (item.Key.Equals(key)) return true;
+            }
+        }
+
+        return false;
     }
 
     public bool Remove(TKey key)
